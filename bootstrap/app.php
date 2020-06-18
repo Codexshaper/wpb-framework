@@ -5,7 +5,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 // require_once __DIR__.'/../routes/web.php';
 
 require_once __DIR__. '/../vendor/illuminate/support/helpers.php';
-require_once __DIR__. '/../src/shortcodes.php';
+require_once __DIR__. '/../vendor/codexshaper/wpb-foundation/src/helpers.php';
+require_once __DIR__. '/../vendor/codexshaper/wpb-foundation/src/shortcodes.php';
 
 use CodexShaper\WP\Application;
 use Illuminate\Support\Str;
@@ -15,14 +16,14 @@ if (! defined('PLUGIN_BASE_PATH')) {
 	define('PLUGIN_BASE_PATH', $basePath);
 }
 
-$app = (new Application)->getInstance();
+$wpb = $app = (new Application)->getInstance();
 
 // require_once PLUGIN_BASE_PATH . '../database/migrations/2014_10_12_000000_create_custom_options_table.php';
 
 // with(new CreateCustomOptionsTable)->up();
 
 
-global $app;
+global $wpb;
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,

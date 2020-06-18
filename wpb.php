@@ -89,7 +89,7 @@ add_filter( 'determine_current_user', 'cs_bypass_user_for_oauth_authentication' 
  * @package           Wp_Plugin_Builder
  *
  * @wordpress-plugin
- * Plugin Name:       Wp Plugin Builder
+ * Plugin Name:       Wp Plugin Builder Framework
  * Plugin URI:        https://github.com/Codexshaper/wp-plugin-builder
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
