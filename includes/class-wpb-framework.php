@@ -79,7 +79,7 @@ class WPB_Framework {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'wp-plugin-builder';
+		$this->plugin_name = 'wpb-framework';
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -304,7 +304,7 @@ class WPB_Framework {
      * @return array
      */
     public function get_scripts() {
-    	
+
         $prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
 
         $scripts = [

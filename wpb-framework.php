@@ -10,10 +10,10 @@
  *
  * @link              https://github.com/maab16
  * @since             1.0.0
- * @package           wpb_framework
+ * @package           WPB_Framework
  *
  * @wordpress-plugin
- * Plugin Name:       Wp Plugin Builder Framework
+ * Plugin Name:       WPB Framework
  * Plugin URI:        https://github.com/Codexshaper/wpb-framework
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
