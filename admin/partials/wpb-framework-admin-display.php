@@ -8,8 +8,8 @@
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/admin/partials
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/admin/partials
  */
 ?>
 

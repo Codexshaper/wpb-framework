@@ -6,8 +6,8 @@
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/includes
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/includes
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/includes
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class Wp_Plugin_Builder_Loader {
+class WPB_Framework_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

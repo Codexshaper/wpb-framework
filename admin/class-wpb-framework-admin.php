@@ -6,8 +6,8 @@
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/admin
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/admin
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/admin
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class Wp_Plugin_Builder_Admin {
+class WPB_Framework_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Wp_Plugin_Builder_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Wp_Plugin_Builder_Loader as all of the hooks are defined
+		 * defined in WPB_Framework_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Wp_Plugin_Builder_Loader will then create the relationship
+		 * The WPB_Framework_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-plugin-builder-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wpb-framework-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Wp_Plugin_Builder_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Wp_Plugin_Builder_Loader as all of the hooks are defined
+		 * defined in WPB_Framework_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Wp_Plugin_Builder_Loader will then create the relationship
+		 * The WPB_Framework_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-plugin-builder-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wpb-framework-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

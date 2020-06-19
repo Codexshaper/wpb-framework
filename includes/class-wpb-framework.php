@@ -13,8 +13,8 @@ use CodexShaper\WP\Admin\Menus\SubMenu;
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/includes
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/includes
  */
 
 /**
@@ -27,11 +27,11 @@ use CodexShaper\WP\Admin\Menus\SubMenu;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Wp_Plugin_Builder
- * @subpackage Wp_Plugin_Builder/includes
+ * @package    WPB_Framework
+ * @subpackage WPB_Framework/includes
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class Wp_Plugin_Builder {
+class WPB_Framework {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -39,7 +39,7 @@ class Wp_Plugin_Builder {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Wp_Plugin_Builder_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      WPB_Framework_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -74,8 +74,8 @@ class Wp_Plugin_Builder {
 
 		$this->define_constants();
 
-		if ( defined( 'WP_PLUGIN_BUILDER_VERSION' ) ) {
-			$this->version = WP_PLUGIN_BUILDER_VERSION;
+		if ( defined( 'WPB_Framework_VERSION' ) ) {
+			$this->version = WPB_Framework_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -94,7 +94,6 @@ class Wp_Plugin_Builder {
         // $admin = new Admin;
 
         $menu = new Menu;
-
         $menu->page_title = "WP Plugin Builder";
         $menu->menu_title = "WP Plugin Builde";
         $menu->capability = "manage_options";
@@ -103,7 +102,6 @@ class Wp_Plugin_Builder {
                 echo '<div class="wrap"><div id="wpb-admin" csrf-token="'.csrf_token().'"></div></div>';
         };
         $menu->icon = "dashicons-text";
-
         $menu->save();
 
         $submenu = new SubMenu;
@@ -120,10 +118,10 @@ class Wp_Plugin_Builder {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Wp_Plugin_Builder_Loader. Orchestrates the hooks of the plugin.
-	 * - Wp_Plugin_Builder_i18n. Defines internationalization functionality.
-	 * - Wp_Plugin_Builder_Admin. Defines all hooks for the admin area.
-	 * - Wp_Plugin_Builder_Public. Defines all hooks for the public side of the site.
+	 * - WPB_Framework_Loader. Orchestrates the hooks of the plugin.
+	 * - WPB_Framework_i18n. Defines internationalization functionality.
+	 * - WPB_Framework_Admin. Defines all hooks for the admin area.
+	 * - WPB_Framework_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -137,33 +135,33 @@ class Wp_Plugin_Builder {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-plugin-builder-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-framework-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-plugin-builder-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-framework-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-plugin-builder-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-framework-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-plugin-builder-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wpb-framework-public.php';
 
-		$this->loader = new Wp_Plugin_Builder_Loader();
+		$this->loader = new WPB_Framework_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Wp_Plugin_Builder_i18n class in order to set the domain and to register the hook
+	 * Uses the WPB_Framework_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -171,7 +169,7 @@ class Wp_Plugin_Builder {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Wp_Plugin_Builder_i18n();
+		$plugin_i18n = new WPB_Framework_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -186,7 +184,7 @@ class Wp_Plugin_Builder {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Wp_Plugin_Builder_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new WPB_Framework_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -202,7 +200,7 @@ class Wp_Plugin_Builder {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Wp_Plugin_Builder_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new WPB_Framework_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -233,7 +231,7 @@ class Wp_Plugin_Builder {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Wp_Plugin_Builder_Loader    Orchestrates the hooks of the plugin.
+	 * @return    WPB_Framework_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -306,6 +304,7 @@ class Wp_Plugin_Builder {
      * @return array
      */
     public function get_scripts() {
+    	
         $prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
 
         $scripts = [
