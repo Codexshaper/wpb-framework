@@ -99,7 +99,7 @@ class WPB_Framework {
         $menu->capability = "manage_options";
         $menu->slug = "wpb";
         $menu->callback = function() {
-                echo '<div class="wrap"><div id="wpb-admin" csrf-token="'.csrf_token().'"></div></div>';
+                echo '<div class="wrap"><div id="wpb-admin" base-url="'.get_site_url().'" csrf-token="'.csrf_token().'"></div></div>';
         };
         $menu->icon = "dashicons-text";
         $menu->save();

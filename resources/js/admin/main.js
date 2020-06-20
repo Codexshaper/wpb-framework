@@ -24,6 +24,7 @@ let token = document.querySelector('#wpb-admin');
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.getAttribute('csrf-token');
+    window.axios.defaults.baseURL = token.getAttribute('base-url');
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }

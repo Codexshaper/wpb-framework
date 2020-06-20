@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Process\Process;
+
 /**
  * Fired during plugin activation
  *
@@ -30,7 +32,7 @@ class WPB_Framework_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		
 	}
 
 }
