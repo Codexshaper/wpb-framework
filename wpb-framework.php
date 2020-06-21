@@ -30,12 +30,30 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'APP_ROOT', __DIR__ );
-define( 'WPB_FILE', __FILE__ );
-define( 'WPB_PATH', dirname( WPB_FILE ) );
-define( 'WPB_INCLUDES', WPB_PATH . '/includes' );
-define( 'WPB_URL', plugins_url( '', WPB_FILE ) );
-define( 'WPB_ASSETS', WPB_URL . '/public' );
+// Application root directory.
+if (!defined('APP_ROOT')) {
+	define( 'APP_ROOT', __DIR__ );
+}
+// Worpress plugin builder file path.
+if (!defined('WPB_FILE')) {
+	define( 'WPB_FILE', __FILE__ );
+}
+// Worpress plugin builder directory path.
+if (!defined('WPB_PATH')) {
+	define( 'WPB_PATH', dirname( WPB_FILE ) );
+}
+// Worpress plugin builder includes path.
+if (!defined('WPB_INCLUDES')) {
+	define( 'WPB_INCLUDES', WPB_PATH . '/includes' );
+}
+// Worpress plugin builder url.
+if (!defined('WPB_URL')) {
+	define( 'WPB_URL', plugins_url( '', WPB_FILE ) );
+}
+// Worpress plugin builder assets path.
+if (!defined('WPB_ASSETS')) {
+	define( 'WPB_ASSETS', WPB_URL . '/public' );
+}
 
 require_once __DIR__.'/bootstrap/app.php';
 
