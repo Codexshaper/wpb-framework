@@ -153,12 +153,12 @@ class WPB {
 		/**
 		 * The class responsible for defining all menu actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-codexshaper-oauth-admin-menu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-admin-menu.php';
 
 		/**
 		 * The class responsible for defining all submenu actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-codexshaper-oauth-admin-submenu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-admin-submenu.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
