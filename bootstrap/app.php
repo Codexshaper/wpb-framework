@@ -1,7 +1,8 @@
 <?php
 require_once(ABSPATH.'wp-includes/pluggable.php');
-
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__. '/../vendor/illuminate/support/helpers.php';
+require_once __DIR__. '/../vendor/codexshaper/wpb-foundation/src/helpers.php';
 
 use CodexShaper\WP\Application;
 

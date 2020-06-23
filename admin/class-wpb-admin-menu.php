@@ -40,7 +40,6 @@ class WPB_Admin_Menu {
 
     public function save()
     {
-        var_dump($this->plugin_name);
         add_action('admin_menu', [$this, 'create_menu']);
     }
 
