@@ -68,7 +68,7 @@ define( 'WPB_VERSION', '1.0.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wpb-activator.php
  */
-function activate_wpb() {
+function wpb_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-activator.php';
 	WPB_Activator::activate();
 }
@@ -77,13 +77,13 @@ function activate_wpb() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wpb-deactivator.php
  */
-function deactivate_wpb() {
+function wpb_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-deactivator.php';
 	WPB_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wpb' );
-register_deactivation_hook( __FILE__, 'deactivate_wpb' );
+register_activation_hook( __FILE__, 'wpb_activate' );
+register_deactivation_hook( __FILE__, 'wpb_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -100,10 +100,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wpb.php';
  *
  * @since    1.0.0
  */
-function run_wpb() {
+function wpb_run() {
 
 	$plugin = new WPB();
 	$plugin->run();
 
 }
-run_wpb();
+wpb_run();
