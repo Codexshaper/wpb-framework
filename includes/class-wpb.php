@@ -93,7 +93,8 @@ class WPB {
 
         // $admin = new Admin;
 
-        $menu = new Menu;
+        $menu = new WPB_Admin_Menu;
+        $menu->plugin_name = "wpb";
         $menu->page_title = "WP Plugin Builder";
         $menu->menu_title = "WP Plugin Builde";
         $menu->capability = "manage_options";
@@ -104,7 +105,8 @@ class WPB {
         $menu->icon = "dashicons-text";
         $menu->save();
 
-        $submenu = new SubMenu;
+        $submenu = new WPB_Admin_SubMenu;
+        $submenu->plugin_name = "wpb";
         $submenu->parent_slug = $menu->slug;
         $submenu->page_title = 'Settings';
         $submenu->menu_title = 'Settings';
@@ -147,6 +149,16 @@ class WPB {
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-admin.php';
+
+		/**
+		 * The class responsible for defining all menu actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-codexshaper-oauth-admin-menu.php';
+
+		/**
+		 * The class responsible for defining all submenu actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-codexshaper-oauth-admin-submenu.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
