@@ -13,8 +13,8 @@ use CodexShaper\WP\Admin\Menus\SubMenu;
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    WPB_Framework
- * @subpackage WPB_Framework/includes
+ * @package    WPB
+ * @subpackage WPB/includes
  */
 
 /**
@@ -27,11 +27,11 @@ use CodexShaper\WP\Admin\Menus\SubMenu;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    WPB_Framework
- * @subpackage WPB_Framework/includes
+ * @package    WPB
+ * @subpackage WPB/includes
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class WPB_Framework {
+class WPB {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -39,7 +39,7 @@ class WPB_Framework {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      WPB_Framework_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      WPB_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -74,12 +74,12 @@ class WPB_Framework {
 
 		$this->define_constants();
 
-		if ( defined( 'WPB_Framework_VERSION' ) ) {
-			$this->version = WPB_Framework_VERSION;
+		if ( defined( 'WPB_VERSION' ) ) {
+			$this->version = WPB_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'wpb-framework';
+		$this->plugin_name = 'wpb';
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -118,10 +118,10 @@ class WPB_Framework {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - WPB_Framework_Loader. Orchestrates the hooks of the plugin.
-	 * - WPB_Framework_i18n. Defines internationalization functionality.
-	 * - WPB_Framework_Admin. Defines all hooks for the admin area.
-	 * - WPB_Framework_Public. Defines all hooks for the public side of the site.
+	 * - WPB_Loader. Orchestrates the hooks of the plugin.
+	 * - WPB_i18n. Defines internationalization functionality.
+	 * - WPB_Admin. Defines all hooks for the admin area.
+	 * - WPB_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -135,33 +135,33 @@ class WPB_Framework {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-framework-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-framework-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wpb-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-framework-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wpb-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wpb-framework-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wpb-public.php';
 
-		$this->loader = new WPB_Framework_Loader();
+		$this->loader = new WPB_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the WPB_Framework_i18n class in order to set the domain and to register the hook
+	 * Uses the WPB_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -169,7 +169,7 @@ class WPB_Framework {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new WPB_Framework_i18n();
+		$plugin_i18n = new WPB_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -184,7 +184,7 @@ class WPB_Framework {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new WPB_Framework_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new WPB_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -200,7 +200,7 @@ class WPB_Framework {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new WPB_Framework_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new WPB_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -231,7 +231,7 @@ class WPB_Framework {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    WPB_Framework_Loader    Orchestrates the hooks of the plugin.
+	 * @return    WPB_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

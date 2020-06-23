@@ -62,34 +62,34 @@ require_once __DIR__.'/bootstrap/app.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WPB_FRAMEWORK_VERSION', '1.0.0' );
+define( 'WPB_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-wpb-framework-activator.php
+ * This action is documented in includes/class-wpb-activator.php
  */
-function activate_wpb_framework() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-framework-activator.php';
-	WPB_Framework_Activator::activate();
+function activate_wpb() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-activator.php';
+	WPB_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wpb-framework-deactivator.php
+ * This action is documented in includes/class-wpb-deactivator.php
  */
-function deactivate_wpb_framework() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-framework-deactivator.php';
-	WPB_Framework_Deactivator::deactivate();
+function deactivate_wpb() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-deactivator.php';
+	WPB_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wpb_framework' );
-register_deactivation_hook( __FILE__, 'deactivate_wpb_framework' );
+register_activation_hook( __FILE__, 'activate_wpb' );
+register_deactivation_hook( __FILE__, 'deactivate_wpb' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wpb-framework.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-wpb.php';
 
 /**
  * Begins execution of the plugin.
@@ -100,10 +100,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wpb-framework.php';
  *
  * @since    1.0.0
  */
-function run_wpb_framework() {
+function run_wpb() {
 
-	$plugin = new WPB_Framework();
+	$plugin = new WPB();
 	$plugin->run();
 
 }
-run_wpb_framework();
+run_wpb();

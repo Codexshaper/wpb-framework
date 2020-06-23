@@ -9,8 +9,8 @@
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    WPB_Framework
- * @subpackage WPB_Framework/includes
+ * @package    WPB
+ * @subpackage WPB/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    WPB_Framework
- * @subpackage WPB_Framework/includes
+ * @package    WPB
+ * @subpackage WPB/includes
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class WPB_Framework_i18n {
+class WPB_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class WPB_Framework_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'wpb-framework',
+			'wpb',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

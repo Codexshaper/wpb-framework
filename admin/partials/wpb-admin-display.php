@@ -8,8 +8,8 @@
  * @link       https://github.com/maab16
  * @since      1.0.0
  *
- * @package    WPB_Framework
- * @subpackage WPB_Framework/admin/partials
+ * @package    WPB
+ * @subpackage WPB/admin/partials
  */
 ?>
 
