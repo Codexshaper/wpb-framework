@@ -26,7 +26,7 @@ if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.getAttribute('csrf-token');
     window.axios.defaults.baseURL = token.getAttribute('base-url');
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found.');
 }
 
 import Vue from 'vue'
@@ -51,4 +51,4 @@ new Vue({
 
 
 // fix the admin menu for the slug "vue-app"
-menuFix('wp-oauth');
+menuFix('wpb');
