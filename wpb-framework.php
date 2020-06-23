@@ -31,8 +31,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Application root directory.
-if (!defined('APP_ROOT')) {
-	define( 'APP_ROOT', __DIR__ );
+if (!defined('WPB_APP_ROOT')) {
+	define( 'WPB_APP_ROOT', __DIR__ );
 }
 // Worpress plugin builder file path.
 if (!defined('WPB_FILE')) {
@@ -100,10 +100,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wpb-framework.php';
  *
  * @since    1.0.0
  */
-function run_wp_plugin_builder() {
+function run_wpb_framework() {
 
 	$plugin = new WPB_Framework();
 	$plugin->run();
 
 }
-run_wp_plugin_builder();
+run_wpb_framework();
