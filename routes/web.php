@@ -1,10 +1,7 @@
 <?php
 
-use CodexShaper\WP\Support\Facades\Route;
-
-
-Route::get('test', function(){
-    echo view('welcome');
+$router->get('test', function(){
+    echo wpb_view('welcome');
     die();
 });
 

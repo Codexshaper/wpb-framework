@@ -1,8 +1,6 @@
 <?php
 
-use CodexShaper\WP\Support\Facades\Route;
-
-Route::get('test', function(){
+$router->get('test', function(){
 	echo "API Test";
 	die();
 });

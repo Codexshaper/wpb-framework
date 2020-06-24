@@ -1,44 +1,27 @@
 <?php
 require_once(ABSPATH.'wp-includes/pluggable.php');
 require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__. '/../vendor/illuminate/support/helpers.php';
-require_once __DIR__. '/../vendor/codexshaper/wpb-foundation/src/helpers.php';
+require_once __DIR__. '/../src/helpers.php';
 
-use CodexShaper\WP\Application;
+use WPB\Application;
 
-$app = $container = (new Application([
+// global $app;
+$app = (new Application([
 	'paths' => [
 		'root' => WPB_APP_ROOT
 	]
-]))->getInstance();
+]));
 
-global $app;
+$container = $app->getInstance();
 
-$container->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    CodexShaper\App\Http\Kernel::class
-);
-$container->singleton(
-    \Illuminate\Contracts\Debug\ExceptionHandler::class,
-    \CodexShaper\App\Exceptions\Handler::class
-);
+try {
+	$router = $app->loadRoutes();
+	$response = $router->dispatch(\Illuminate\Http\Request::capture());
+	$response->send();
 
-if(\CodexShaper\WP\Support\Facades\Route::exists(\Illuminate\Http\Request::capture())) {
-	try {
-
-		$kernel = $container->make(Illuminate\Contracts\Http\Kernel::class);
-
-		$response = $kernel->handle(
-		    $request = Illuminate\Http\Request::capture()
-		);
-
-		$response->send();
-
-	} catch(\Exception $ex) {
-		if(! \CodexShaper\WP\Support\Facades\Route::current()) {
-			return true;
-		}
-		throw new \Exception($ex, 1);
+} catch(\Exception $ex) {
+	if(! \WPB\Support\Facades\Route::current()) {
+		return true;
 	}
+	throw new \Exception($ex, 1);
 }
-
