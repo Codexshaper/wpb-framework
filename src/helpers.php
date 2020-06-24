@@ -4,7 +4,7 @@ use Codexshaper\WP\Application;
 use Illuminate\Container\Container;
 
 if (!function_exists('wpb_csrf_token')) {
-    function wpb_csrf_token($action = 'wbp_nonce')
+    function wpb_csrf_token($action = 'wpb_nonce')
     {
         return wp_create_nonce($action);
     }
