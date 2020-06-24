@@ -1,8 +1,8 @@
 <?php
 
-namespace CodexShaper\App\Http;
+namespace WPB\App\Http;
 
-use CodexShaper\WP\Http\Kernel as HttpKernel;
+use WPB\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
@@ -34,7 +34,7 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             // \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \CodexShaper\App\Http\Middleware\VerifyCsrfToken::class,
+            \WPB\App\Http\Middleware\VerifyCsrfToken::class,
             // \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -62,6 +62,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'auth' => \CodexShaper\App\Http\Middleware\AuthMiddleware::class,
+        'auth' => \WPB\App\Http\Middleware\AuthMiddleware::class,
     ];
 }

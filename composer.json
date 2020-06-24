@@ -19,7 +19,8 @@
             "database/seeds"
         ],
         "psr-4": {
-           "CodexShaper\\App\\": "app/"
+           "WPB\\App\\": "app/",
+           "WPB\\": "src/"
         }
 	},
     "minimum-stability": "dev",

@@ -1,6 +1,6 @@
 <?php
 
-namespace CodexShaper\App\Http\Middleware;
+namespace WPB\App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

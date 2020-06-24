@@ -1,6 +1,6 @@
 <?php
 
-namespace CodexShaper\App;
+namespace WPB\App;
 
 use Illuminate\Database\Eloquent\Model;
 
