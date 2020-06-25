@@ -1,8 +1,8 @@
 <?php
 
-namespace CodexShaper\App\Exceptions;
+namespace WPB\App\Exceptions;
 
-use CodexShaper\WP\Exceptions\Handler as ExceptionHandler;
+use WPB\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
