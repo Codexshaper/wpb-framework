@@ -27,7 +27,8 @@
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "CodexShaper\\WP\\ComposerScripts::postAutoloadDump"
+            "CodexShaper\\WP\\ComposerScripts::postAutoloadDump",
+            "composer dump-autoload"
         ]
     }
 }
