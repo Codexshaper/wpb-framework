@@ -163,11 +163,11 @@ class Application
 
         require $dir.'web.php';
 
-        $router->group(['prefix' => 'api'], function () use ($dir) {
+        $router->group(['prefix' => 'api'], function () use ($dir, $router) {
             require $dir.'api.php';
         });
 
-        $router->group(['prefix' => 'wp-admin'], function () use ($dir) {
+        $router->group(['prefix' => 'wp-admin'], function () use ($dir, $router) {
             require $dir.'admin.php';
         });
     }
