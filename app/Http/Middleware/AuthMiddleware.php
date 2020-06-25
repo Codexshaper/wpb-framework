@@ -12,10 +12,17 @@ class AuthMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  array  $guards
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
-    {
+    public function handle(Request $request, Closure $next, ...$guards)
+    {   
+        foreach($guards as $guard) {
+            if($guard == 'api') {
+                 // throw new \Exception("Please install API", 1);
+            }
+        }
+
         if(\is_user_logged_in()) {
             return $next($request);
         }
