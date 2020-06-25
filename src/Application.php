@@ -70,7 +70,7 @@ class Application
         $this->registerProviders();
         $this->registerRequest();
         $this->registerRouter();
-        // $this->loadRoutes();
+        $this->loadRoutes($this->app['router']);
     }
 
     public function getInstance()
@@ -150,30 +150,25 @@ class Application
 
     protected function registerRouter()
     {
-        if(isset($this->app['router'])) {
-            $this->app->instance(\Illuminate\Routing\Router::class, $this->app['router']);
-        }  
+        $this->app['router'] = new \Illuminate\Routing\Router($this->app['events']);
+        $this->app->instance(\Illuminate\Routing\Router::class, $this->app['router']);  
         $this->app->alias('Route', \WPB\Support\Facades\Route::class);
     }
 
-    public function loadRoutes($dir = null)
+    public function loadRoutes($router, $dir = null)
     {
         if (!$dir) {
             $dir =  __DIR__ . '/../routes/';
         }
 
-        $router = new \Illuminate\Routing\Router($this->app['events']);
-            
-            require $dir.'web.php';
+        require $dir.'web.php';
 
-            $router->group(['prefix' => 'api'], function () use ($dir) {
-                require $dir.'api.php';
-            });
+        $router->group(['prefix' => 'api'], function () use ($dir) {
+            require $dir.'api.php';
+        });
 
-            $router->group(['prefix' => 'wp-admin'], function () use ($dir) {
-                require $dir.'admin.php';
-            });
-
-            return $router;
+        $router->group(['prefix' => 'wp-admin'], function () use ($dir) {
+            require $dir.'admin.php';
+        });
     }
 }

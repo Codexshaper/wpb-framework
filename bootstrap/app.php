@@ -14,9 +14,21 @@ $app = (new Application([
 
 $container = $app->getInstance();
 
+$container->singleton(
+    Illuminate\Contracts\Http\Kernel::class,
+    \WPB\App\Http\Kernel::class
+);
+$container->singleton(
+    \Illuminate\Contracts\Debug\ExceptionHandler::class,
+    \WPB\App\Exceptions\Handler::class
+);
+
 try {
-	$router = $app->loadRoutes();
-	$response = $router->dispatch(\Illuminate\Http\Request::capture());
+
+	$kernel = $container->make(\Illuminate\Contracts\Http\Kernel::class);
+
+	$response = $kernel->handle(\Illuminate\Http\Request::capture());
+
 	$response->send();
 
 } catch(\Exception $ex) {
