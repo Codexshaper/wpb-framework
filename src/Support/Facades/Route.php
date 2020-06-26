@@ -13,6 +13,6 @@ class Route extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \Illuminate\Routing\Router::class;
+        return \WPB\Router::class;
     }
 }

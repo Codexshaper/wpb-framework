@@ -150,8 +150,8 @@ class Application
 
     protected function registerRouter()
     {
-        $this->app['router'] = new \Illuminate\Routing\Router($this->app['events']);
-        $this->app->instance(\Illuminate\Routing\Router::class, $this->app['router']);  
+        $this->app->instance(\Illuminate\Routing\Router::class, $this->app['router']);
+         $this->app->instance(\WPB\Router::class, $this->app['router']);  
         $this->app->alias('Route', \WPB\Support\Facades\Route::class);
     }
 
