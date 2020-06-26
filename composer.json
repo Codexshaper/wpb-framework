@@ -10,8 +10,18 @@
     ],
     "license": "MIT",
     "require": {
-    	"php": "^7.2",
-        "codexshaper/wpb-foundation": "^1.0"
+        "php": "^7.2",
+        "illuminate/http": "^7.11",
+        "illuminate/events": "^7.11",
+        "symfony/debug": "^4.4",
+        "illuminate/config": "^7.11",
+        "phpseclib/phpseclib": "^2.0",
+        "symfony/psr-http-message-bridge": "^2.0",
+        "nesbot/carbon": "^2.34",
+        "codexshaper/wpb-router": "^1.0",
+        "codexshaper/php-blade-view": "^1.2",
+        "codexshaper/php-database": "^1.0",
+        "symfony/process": "^5.1"
     },
 	"autoload": {
         "classmap": [
@@ -20,14 +30,15 @@
         ],
         "psr-4": {
            "WPB\\App\\": "app/",
-           "WPB\\": "src/"
+           "WPB\\": "src/",
+           "CodexShaper\\Composer\\": "src/Composer/"
         }
 	},
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "CodexShaper\\WP\\ComposerScripts::postAutoloadDump"
+            "CodexShaper\\Composer\\ComposerScripts::postAutoloadDump"
         ],
         "post-install-cmd": [
             "composer dump-autoload"
