@@ -84,14 +84,7 @@ class WPB {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
-		if ( is_admin() ) {
-            add_action( 'admin_enqueue_scripts', [ $this, 'register' ], 5 );
-        } else {
-            add_action( 'wp_enqueue_scripts', [ $this, 'register' ], 5 );
-        }
-
-        // $admin = new Admin;
+		$this->register_assets();
 
         $menu = new WPB_Admin_Menu;
         $menu->plugin_name = "wpb";
@@ -273,7 +266,7 @@ class WPB {
      *
      * @return void
      */
-    public function register() {
+    public function register_assets() {
         $this->register_scripts( $this->get_scripts() );
         $this->register_styles( $this->get_styles() );
     }
