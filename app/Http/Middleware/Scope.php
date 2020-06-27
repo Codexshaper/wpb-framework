@@ -21,7 +21,13 @@ class Scope
      * @return mixed
      */
     public function handle(Request $request, Closure $next, ...$scopes)
-    {   
+    {
+        foreach ($scopes as $scope) {
+            if (! in_array($scope, $request->scopes)) {
+                wp_send_json( ["msg" => "You don't have enough permission"], 400 );
+            }
+        }  
+
         return $next($request);
     }
 }

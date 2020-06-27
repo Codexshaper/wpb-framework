@@ -46,6 +46,7 @@ class AuthMiddleware
                         $user = User::find($user_id);
                         
                         $request->merge(['user' => $user ]);
+                        $request->merge(['scopes' => $psr->getAttribute('oauth_scopes') ]);
 
                         $request->setUserResolver(function () use ($user) {
                             return $user;

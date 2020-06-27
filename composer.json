@@ -22,7 +22,7 @@
         "codexshaper/wpb-router": "^1.0",
         "codexshaper/php-blade-view": "^1.2",
         "codexshaper/php-database": "^1.0",
-        "codexshaper/oauth2": "^1.0"
+        "codexshaper/oauth2": "^1.1"
     },
 	"autoload": {
         "classmap": [
