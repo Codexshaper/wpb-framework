@@ -1,9 +1,5 @@
 <?php
 
-use CodexShaper\WP\Admin\Menus\Admin;
-use CodexShaper\WP\Admin\Menus\Menu;
-use CodexShaper\WP\Admin\Menus\SubMenu;
-
 /**
  * The file that defines the core plugin class
  *
@@ -88,8 +84,8 @@ class WPB {
 
         $menu = new WPB_Admin_Menu;
         $menu->plugin_name = "wpb";
-        $menu->page_title = "WP Plugin Builder";
-        $menu->menu_title = "WP Plugin Builder";
+        $menu->page_title = "WPB";
+        $menu->menu_title = "WPB";
         $menu->capability = "manage_options";
         $menu->slug = "wpb";
         $menu->callback = function() {

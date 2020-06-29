@@ -1,6 +1,6 @@
 <?php
 
-use Codexshaper\WP\Application;
+use WPB\Application;
 use Illuminate\Container\Container;
 
 if (!function_exists('wpb_csrf_token')) {

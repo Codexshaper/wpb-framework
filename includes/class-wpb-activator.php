@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\Process\Process;
-
 /**
  * Fired during plugin activation
  *
