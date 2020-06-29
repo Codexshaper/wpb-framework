@@ -43,10 +43,10 @@ class WPB_Admin_Menu {
         add_action('admin_menu', [$this, 'create_menu']);
     }
 
-    public static function make($options = [])
+    public function make($options = [])
     {
         foreach ($options as $property => $value) {
-            if (property_exists($this, $property)) {
+            if (property_exists(get_called_class(), $property)) {
                 $this->{$property} = $value;
             }
         }
@@ -60,8 +60,6 @@ class WPB_Admin_Menu {
      */
     public function create_menu()
     {
-        global $submenu;
-
         $hook = add_menu_page(
             $this->page_title,
             $this->menu_title,
@@ -70,11 +68,6 @@ class WPB_Admin_Menu {
             $this->callback,
             $this->icon
         );
-
-        // if ( current_user_can( $this->capability ) ) {
-        //     $submenu[ $this->slug ][] = array( __( 'Clients', 'textdomain' ), $this->capability, 'admin.php?page=' . $this->slug . '#/clients' );
-        //     $submenu[ $this->slug ][] = array( __( 'Settings', 'textdomain' ), $this->capability, 'admin.php?page=' . $this->slug . '#/settings' );
-        // }
 
         add_action('load-'.$hook, [$this, 'init_hooks']);
     }
