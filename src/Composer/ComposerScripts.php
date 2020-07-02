@@ -116,7 +116,9 @@ class ComposerScripts {
 		foreach ( $files as $file ) {
 			$file = $root . $file;
 			if ( file_exists( $file ) ) {
-				$contents = get_contents( $file );
+				global $wp_filesystem;
+
+				$contents = $wp_filesystem->get_contents( $file );
 				$contents = str_replace( 'wpb_', $snake_case . '_', $contents );
 				$contents = str_replace( 'wpb', $vendor_name, $contents );
 				$contents = str_replace( 'WPB_APP_ROOT', strtoupper( $camel_case ) . '_APP_ROOT', $contents );
@@ -127,7 +129,7 @@ class ComposerScripts {
 				$contents = str_replace( 'WPB_ASSETS', strtoupper( $camel_case ) . '_ASSETS', $contents );
 				$contents = str_replace( 'WPB_VERSION', strtoupper( $camel_case ) . '_VERSION', $contents );
 				$contents = str_replace( 'WPB', $camel_case, $contents );
-				put_contents(
+				$wp_filesystem->put_contents(
 					$file,
 					$contents
 				);
@@ -159,9 +161,10 @@ class ComposerScripts {
 	protected static function update_bootstrap( $root, $camel_case ) {
 		$file = $root . '/bootstrap/app.php';
 		if ( file_exists( $file ) ) {
-			$contents = get_contents( $file );
+			global $wp_filesystem;
+			$contents = $wp_filesystem->get_contents( $file );
 			$contents = str_replace( 'WPB_APP_ROOT', strtoupper( $camel_case ) . '_APP_ROOT', $contents );
-			put_contents(
+			$wp_filesystem->put_contents(
 				$file,
 				$contents
 			);
