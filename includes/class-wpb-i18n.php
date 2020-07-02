@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage WPB/includes
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class WPB_i18n {
+class WPB_I18n {
 
 
 	/**

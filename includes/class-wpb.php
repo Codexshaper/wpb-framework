@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -82,26 +81,26 @@ class WPB {
 		$this->define_public_hooks();
 		$this->register_assets();
 
-        $menu = new WPB_Admin_Menu;
-        $menu->plugin_name = "wpb";
-        $menu->page_title = "WPB";
-        $menu->menu_title = "WPB";
-        $menu->capability = "manage_options";
-        $menu->slug = "wpb";
-        $menu->callback = function() {
-                echo '<div class="wrap"><div id="wpb-admin" base-url="'.get_site_url().'" csrf-token="'.wpb_csrf_token().'"></div></div>';
-        };
-        $menu->icon = "dashicons-text";
-        $menu->save();
+		$menu              = new WPB_Admin_Menu();
+		$menu->plugin_name = 'wpb';
+		$menu->page_title  = 'WPB';
+		$menu->menu_title  = 'WPB';
+		$menu->capability  = 'manage_options';
+		$menu->slug        = 'wpb';
+		$menu->callback    = function() {
+				echo '<div class="wrap"><div id="wpb-admin" base-url="' . esc_attr( get_site_url() ) . '" csrf-token="' . esc_attr( wpb_csrf_token() ) . '"></div></div>';
+		};
+		$menu->icon        = 'dashicons-text';
+		$menu->save();
 
-        $submenu = new WPB_Admin_SubMenu;
-        $submenu->plugin_name = "wpb";
-        $submenu->parent_slug = $menu->slug;
-        $submenu->page_title = 'Settings';
-        $submenu->menu_title = 'Settings';
-        $submenu->capability = 'manage_options';
-        $submenu->slug = 'admin.php?page=' . $menu->slug . '#/settings';
-        $submenu->save();
+		$submenu              = new WPB_Admin_SubMenu();
+		$submenu->plugin_name = 'wpb';
+		$submenu->parent_slug = $menu->slug;
+		$submenu->page_title  = 'Settings';
+		$submenu->menu_title  = 'Settings';
+		$submenu->capability  = 'manage_options';
+		$submenu->slug        = 'admin.php?page=' . $menu->slug . '#/settings';
+		$submenu->save();
 	}
 
 	/**
@@ -170,7 +169,7 @@ class WPB {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new WPB_i18n();
+		$plugin_i18n = new WPB_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -249,124 +248,124 @@ class WPB {
 	}
 
 	/**
-     * Define the constants.
-     *
-     * @return void
-     */
-    public function define_constants() {
-        define( 'WPB_VERSION', $this->version );
-    }
-
-    /**
-     * Register our app scripts and styles.
-     *
-     * @return void
-     */
-    public function register_assets() {
-        $this->register_scripts( $this->get_scripts() );
-        $this->register_styles( $this->get_styles() );
-    }
-
-    /**
-     * Register scripts.
-     *
-     * @param  array $scripts
-     *
-     * @return void
-     */
-    private function register_scripts( $scripts ) {
-        foreach ( $scripts as $handle => $script ) {
-            $deps      = isset( $script['deps'] ) ? $script['deps'] : false;
-            $in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : false;
-            $version   = isset( $script['version'] ) ? $script['version'] : WPB_VERSION;
-
-            wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
-        }
-    }
-
-    /**
-     * Register styles.
-     *
-     * @param  array $styles
-     *
-     * @return void
-     */
-    public function register_styles( $styles ) {
-        foreach ( $styles as $handle => $style ) {
-            $deps = isset( $style['deps'] ) ? $style['deps'] : false;
-
-            wp_register_style( $handle, $style['src'], $deps, WPB_VERSION );
-        }
-    }
+	 * Define the constants.
+	 *
+	 * @return void
+	 */
+	public function define_constants() {
+		define( 'WPB_VERSION', $this->version );
+	}
 
 	/**
-     * Get all registered scripts.
-     *
-     * @return array
-     */
-    public function get_scripts() {
+	 * Register our app scripts and styles.
+	 *
+	 * @return void
+	 */
+	public function register_assets() {
+		$this->register_scripts( $this->get_scripts() );
+		$this->register_styles( $this->get_styles() );
+	}
 
-        $prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
+	/**
+	 * Register scripts.
+	 *
+	 * @param  array $scripts All Scripts as an array.
+	 *
+	 * @return void
+	 */
+	private function register_scripts( $scripts ) {
+		foreach ( $scripts as $handle => $script ) {
+			$deps      = isset( $script['deps'] ) ? $script['deps'] : false;
+			$in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : false;
+			$version   = isset( $script['version'] ) ? $script['version'] : WPB_VERSION;
 
-        $scripts = [
-            'wpb-runtime' => [
-                'src'       => WPB_ASSETS . '/js/runtime.js',
-                'version'   => filemtime( WPB_PATH . '/public/js/runtime.js' ),
-                'in_footer' => true
-            ],
-            'wpb-vendor' => [
-                'src'       => WPB_ASSETS . '/js/vendors.js',
-                'version'   => filemtime( WPB_PATH . '/public/js/vendors.js' ),
-                'in_footer' => true
-            ],
-            'wpb-frontend' => [
-                'src'       => WPB_ASSETS . '/js/frontend.js',
-                'deps'      => [ 'jquery', 'wpb-vendor', 'wpb-runtime' ],
-                'version'   => filemtime( WPB_PATH . '/public/js/frontend.js' ),
-                'in_footer' => true
-            ],
-            'wpb-admin' => [
-                'src'       => WPB_ASSETS . '/js/admin.js',
-                'deps'      => [ 'jquery', 'wpb-vendor', 'wpb-runtime' ],
-                'version'   => filemtime( WPB_PATH . '/public/js/admin.js' ),
-                'in_footer' => true
-            ],
-            'wpb-spa' => [
-                'src'       => WPB_ASSETS . '/js/spa.js',
-                'deps'      => [ 'jquery', 'wpb-vendor', 'wpb-runtime' ],
-                'version'   => filemtime( WPB_PATH . '/public/js/spa.js' ),
-                'in_footer' => true
-            ]
-        ];
+			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
+		}
+	}
 
-        return $scripts;
-    }
+	/**
+	 * Register styles.
+	 *
+	 * @param  array $styles All styles as an array.
+	 *
+	 * @return void
+	 */
+	public function register_styles( $styles ) {
+		foreach ( $styles as $handle => $style ) {
+			$deps = isset( $style['deps'] ) ? $style['deps'] : false;
 
-    /**
-     * Get registered styles.
-     *
-     * @return array
-     */
-    public function get_styles() {
+			wp_register_style( $handle, $style['src'], $deps, WPB_VERSION );
+		}
+	}
 
-        $styles = [
-            'wpb-style' => [
-                'src' =>  WPB_ASSETS . '/css/style.css'
-            ],
-            'wpb-frontend' => [
-                'src' =>  WPB_ASSETS . '/css/frontend.css'
-            ],
-            'wpb-admin' => [
-                'src' =>  WPB_ASSETS . '/css/admin.css'
-            ],
-            'wpb-spa' => [
-                'src' =>  WPB_ASSETS . '/css/spa.css'
-            ],
-            'wpb-vendors' => [
-                'src' =>  WPB_ASSETS . '/css/vendors.css'
-            ],
-        ];
+	/**
+	 * Get all registered scripts.
+	 *
+	 * @return array
+	 */
+	public function get_scripts() {
 
-        return $styles;
-    }
+		$prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
+
+		$scripts = array(
+			'wpb-runtime'  => array(
+				'src'       => WPB_ASSETS . '/js/runtime.js',
+				'version'   => filemtime( WPB_PATH . '/public/js/runtime.js' ),
+				'in_footer' => true,
+			),
+			'wpb-vendor'   => array(
+				'src'       => WPB_ASSETS . '/js/vendors.js',
+				'version'   => filemtime( WPB_PATH . '/public/js/vendors.js' ),
+				'in_footer' => true,
+			),
+			'wpb-frontend' => array(
+				'src'       => WPB_ASSETS . '/js/frontend.js',
+				'deps'      => array( 'jquery', 'wpb-vendor', 'wpb-runtime' ),
+				'version'   => filemtime( WPB_PATH . '/public/js/frontend.js' ),
+				'in_footer' => true,
+			),
+			'wpb-admin'    => array(
+				'src'       => WPB_ASSETS . '/js/admin.js',
+				'deps'      => array( 'jquery', 'wpb-vendor', 'wpb-runtime' ),
+				'version'   => filemtime( WPB_PATH . '/public/js/admin.js' ),
+				'in_footer' => true,
+			),
+			'wpb-spa'      => array(
+				'src'       => WPB_ASSETS . '/js/spa.js',
+				'deps'      => array( 'jquery', 'wpb-vendor', 'wpb-runtime' ),
+				'version'   => filemtime( WPB_PATH . '/public/js/spa.js' ),
+				'in_footer' => true,
+			),
+		);
+
+		return $scripts;
+	}
+
+	/**
+	 * Get registered styles.
+	 *
+	 * @return array
+	 */
+	public function get_styles() {
+
+		$styles = array(
+			'wpb-style'    => array(
+				'src' => WPB_ASSETS . '/css/style.css',
+			),
+			'wpb-frontend' => array(
+				'src' => WPB_ASSETS . '/css/frontend.css',
+			),
+			'wpb-admin'    => array(
+				'src' => WPB_ASSETS . '/css/admin.css',
+			),
+			'wpb-spa'      => array(
+				'src' => WPB_ASSETS . '/css/spa.css',
+			),
+			'wpb-vendors'  => array(
+				'src' => WPB_ASSETS . '/css/vendors.css',
+			),
+		);
+
+		return $styles;
+	}
 }

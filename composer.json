@@ -39,7 +39,7 @@
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "CodexShaper\\Composer\\ComposerScripts::postAutoloadDump"
+            "CodexShaper\\Composer\\ComposerScripts::post_autoload_dump"
         ],
         "post-install-cmd": [
             "composer dump-autoload"

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -22,86 +21,139 @@
  */
 class WPB_Admin_Menu {
 
+	/**
+	 * The menu page title.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $page_title    The string used to set menu page title.
+	 */
 	public $page_title;
 
-    public $menu_title;
+	/**
+	 * The menu title.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $menu_title    The string used to set menu title.
+	 */
+	public $menu_title;
 
-    public $capability;
+	/**
+	 * The menu capability.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $capability    The string used to set menu capability.
+	 */
+	public $capability;
 
-    public $slug;
+	/**
+	 * The menu slug.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $slug    The string used to set menu slug.
+	 */
+	public $slug;
 
-    public $callback;
+	/**
+	 * The callback to render content.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      callback    $callback    The callback used to render content.
+	 */
+	public $callback;
 
-    public $icon;
+	/**
+	 * The menu icon.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $icon    The string used to set menu icon.
+	 */
+	public $icon;
 
-    public $position;
+	/**
+	 * The menu position.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      int    $position    The string used to set menu position.
+	 */
+	public $position;
 
-    public $plugin_name;
+	/**
+	 * The menu plugin name.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 */
+	public $plugin_name;
 
-    public function save()
-    {
-        add_action('admin_menu', [$this, 'create_menu']);
-    }
+	/**
+	 * Create a new menu page.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function save() {
+		add_action( 'admin_menu', array( $this, 'create_menu' ) );
+	}
 
-    public function make($options = [])
-    {
-        foreach ($options as $property => $value) {
-            if (property_exists(get_called_class(), $property)) {
-                $this->{$property} = $value;
-            }
-        }
-        add_action('admin_menu', [$this, 'create_menu']);
-    }
+	/**
+	 * Create a new menu page.
+	 *
+	 * @since    1.0.0
+	 * @param    array $options Pass proprties as an array.
+	 * @access   public
+	 */
+	public function make( $options = array() ) {
+		foreach ( $options as $property => $value ) {
+			if ( property_exists( get_called_class(), $property ) ) {
+				$this->{$property} = $value;
+			}
+		}
+		add_action( 'admin_menu', array( $this, 'create_menu' ) );
+	}
 
-    /**
-     * Register our menu page.
-     *
-     * @return void
-     */
-    public function create_menu()
-    {
-        $hook = add_menu_page(
-            $this->page_title,
-            $this->menu_title,
-            $this->capability,
-            $this->slug,
-            $this->callback,
-            $this->icon
-        );
+	/**
+	 * Register new menu page.
+	 *
+	 * @return void
+	 */
+	public function create_menu() {
+		$hook = add_menu_page(
+			$this->page_title,
+			$this->menu_title,
+			$this->capability,
+			$this->slug,
+			$this->callback,
+			$this->icon
+		);
 
-        add_action('load-'.$hook, [$this, 'init_hooks']);
-    }
+		add_action( 'load-' . $hook, array( $this, 'init_hooks' ) );
+	}
 
-    /**
-     * Initialize our hooks for the admin page.
-     *
-     * @return void
-     */
-    public function init_hooks()
-    {
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-    }
+	/**
+	 * Initialize hooks for the admin page.
+	 *
+	 * @return void
+	 */
+	public function init_hooks() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	}
 
-    /**
-     * Load scripts and styles for the app.
-     *
-     * @return void
-     */
-    public function enqueue_scripts()
-    {
-        wp_enqueue_style($this->plugin_name . '-vendors');
-        wp_enqueue_style($this->plugin_name . '-admin');
-        wp_enqueue_script($this->plugin_name . '-admin');
-    }
-
-    /**
-     * Render our admin page.
-     *
-     * @return void
-     */
-    public function plugin_page()
-    {
-        echo '<div class="wrap"><div id="'. $this->plugin_name .'-admin" csrf-token="'.csrf_token().'"></div></div>';
-    }
-
+	/**
+	 * Load scripts and styles for the current menu page.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( $this->plugin_name . '-vendors' );
+		wp_enqueue_style( $this->plugin_name . '-admin' );
+		wp_enqueue_script( $this->plugin_name . '-admin' );
+	}
 }
