@@ -13,6 +13,7 @@ namespace CodexShaper\Composer;
 
 use Composer\Script\Event;
 use Symfony\Component\Process\Process;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * The composer script class.
@@ -116,9 +117,10 @@ class ComposerScripts {
 		foreach ( $files as $file ) {
 			$file = $root . $file;
 			if ( file_exists( $file ) ) {
-				global $wp_filesystem;
 
-				$contents = $wp_filesystem->get_contents( $file );
+				$filesystem = new Filesystem();
+
+				$contents = $filesystem->get( $file );
 				$contents = str_replace( 'wpb_', $snake_case . '_', $contents );
 				$contents = str_replace( 'wpb', $vendor_name, $contents );
 				$contents = str_replace( 'WPB_APP_ROOT', strtoupper( $camel_case ) . '_APP_ROOT', $contents );
@@ -129,7 +131,7 @@ class ComposerScripts {
 				$contents = str_replace( 'WPB_ASSETS', strtoupper( $camel_case ) . '_ASSETS', $contents );
 				$contents = str_replace( 'WPB_VERSION', strtoupper( $camel_case ) . '_VERSION', $contents );
 				$contents = str_replace( 'WPB', $camel_case, $contents );
-				$wp_filesystem->put_contents(
+				$filesystem->put(
 					$file,
 					$contents
 				);
@@ -153,18 +155,18 @@ class ComposerScripts {
 	 * @since    1.0.0
 	 * @access   public
 	 *
-	 * @param string $root The string is unique root path for each plugin.
-	 * @param string $camel_case This string is camel case of project name.
+	 * @param Illuminate\Filesystem\Filesystem $filesystem The illuminate filesystem.
+	 * @param string                           $root The string is unique root path for each plugin.
+	 * @param string                           $camel_case This string is camel case of project name.
 	 *
 	 * @return void
 	 */
-	protected static function update_bootstrap( $root, $camel_case ) {
+	protected static function update_bootstrap( $filesystem, $root, $camel_case ) {
 		$file = $root . '/bootstrap/app.php';
 		if ( file_exists( $file ) ) {
-			global $wp_filesystem;
-			$contents = $wp_filesystem->get_contents( $file );
+			$contents = $filesystem->get( $file );
 			$contents = str_replace( 'WPB_APP_ROOT', strtoupper( $camel_case ) . '_APP_ROOT', $contents );
-			$wp_filesystem->put_contents(
+			$filesystem->put(
 				$file,
 				$contents
 			);
