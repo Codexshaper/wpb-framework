@@ -146,7 +146,7 @@ class ComposerScripts {
 			}
 		}
 
-		static::update_bootstrap( $filesystem, $root, $camel_case );
+		static::update_composer( $filesystem, $root, $camel_case );
 	}
 
 	/**
@@ -171,6 +171,27 @@ class ComposerScripts {
 				$contents
 			);
 
+		}
+	}
+
+	/**
+	 * Update composer.
+	 *
+	 * @param Illuminate\Filesystem\Filesystem $filesystem The illuminate filesystem.
+	 * @param  string                           $root The app root.
+	 * @param  string                           $camel_case The composer event.
+	 *
+	 * @return void
+	 */
+	protected static function update_composer( $filesystem, $root, $camel_case ) {
+		$file = $root . '/composer.json';
+		if ( file_exists( $file ) ) {
+			$contents = $filesystem->get( $file );
+			$contents = str_replace( 'WPB', $camel_case, $contents );
+			$filesystem->put(
+				$file,
+				$contents
+			);
 		}
 	}
 }
