@@ -81,20 +81,18 @@ class WPB {
 		$this->define_public_hooks();
 		$this->register_assets();
 
-		$menu              = new WPB_Admin_Menu();
-		$menu->plugin_name = 'wpb';
-		$menu->page_title  = 'WPB';
-		$menu->menu_title  = 'WPB';
-		$menu->capability  = 'manage_options';
-		$menu->slug        = 'wpb';
-		$menu->callback    = function() {
+		$menu             = new WPB_Admin_Menu( $this->plugin_name );
+		$menu->page_title = 'WPB';
+		$menu->menu_title = 'WPB';
+		$menu->capability = 'manage_options';
+		$menu->slug       = 'wpb';
+		$menu->callback   = function() {
 				echo '<div class="wrap"><div id="wpb-admin" base-url="' . esc_attr( get_site_url() ) . '" csrf-token="' . esc_attr( wpb_csrf_token() ) . '"></div></div>';
 		};
-		$menu->icon        = 'dashicons-text';
+		$menu->icon       = 'dashicons-text';
 		$menu->save();
 
-		$submenu              = new WPB_Admin_SubMenu();
-		$submenu->plugin_name = 'wpb';
+		$submenu              = new WPB_Admin_SubMenu( $this->plugin_name );
 		$submenu->parent_slug = $menu->slug;
 		$submenu->page_title  = 'Settings';
 		$submenu->menu_title  = 'Settings';

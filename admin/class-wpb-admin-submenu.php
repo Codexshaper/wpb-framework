@@ -26,7 +26,7 @@ class WPB_Admin_SubMenu {
 	 * The menu page title.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      string    $page_title    The string used to set menu page title.
 	 */
 	public $page_title;
@@ -35,7 +35,7 @@ class WPB_Admin_SubMenu {
 	 * The menu title.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      string    $menu_title    The string used to set menu title.
 	 */
 	public $menu_title;
@@ -44,7 +44,7 @@ class WPB_Admin_SubMenu {
 	 * The menu capability.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      string    $capability    The string used to set menu capability.
 	 */
 	public $capability;
@@ -53,7 +53,7 @@ class WPB_Admin_SubMenu {
 	 * The menu slug.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      string    $slug    The string used to set menu slug.
 	 */
 	public $slug;
@@ -62,7 +62,7 @@ class WPB_Admin_SubMenu {
 	 * The callback to render content.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      callback    $callback    The callback used to render content.
 	 */
 	public $callback;
@@ -71,7 +71,7 @@ class WPB_Admin_SubMenu {
 	 * The menu icon.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      string    $icon    The string used to set menu icon.
 	 */
 	public $icon;
@@ -80,7 +80,7 @@ class WPB_Admin_SubMenu {
 	 * The menu position.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   public
 	 * @var      int    $position    The string used to set menu position.
 	 */
 	public $position;
@@ -89,10 +89,21 @@ class WPB_Admin_SubMenu {
 	 * The menu plugin name.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   private
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
-	public $plugin_name;
+	private $plugin_name;
+
+	/**
+	 * Boot Menu.
+	 *
+	 * @param  string $plugin_name The string used to uniquely identify this plugin.
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function __construct( $plugin_name ) {
+		$this->plugin_name = $plugin_name;
+	}
 
 	/**
 	 * Create a new menu page.
