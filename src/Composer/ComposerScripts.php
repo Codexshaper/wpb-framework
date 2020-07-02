@@ -146,7 +146,7 @@ class ComposerScripts {
 			}
 		}
 
-		static::update_bootstrap( $root, $camel_case );
+		static::update_bootstrap( $filesystem, $root, $camel_case );
 	}
 
 	/**
