@@ -111,7 +111,8 @@ class Kernel implements KernelContract {
 			$request->enableHttpMethodParameterOverride();
 			$response = $this->send_request_through_router( $request );
 		} catch ( Throwable $e ) {
-			throw new \Exception( $e, 1 );
+			$this->report_exception( $e );
+			$response = $this->render_exception( $request, $e );
 		}
 
 		$this->app['events']->dispatch(

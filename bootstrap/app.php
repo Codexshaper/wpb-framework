@@ -34,17 +34,19 @@ $container->singleton(
 	\WPB\App\Exceptions\Handler::class
 );
 
-try {
+if ( \WPB\Support\Facades\Route::exists( \Illuminate\Http\Request::capture() ) ) {
+	try {
 
-	$kernel = $container->make( \Illuminate\Contracts\Http\Kernel::class );
+		$kernel = $container->make( \Illuminate\Contracts\Http\Kernel::class );
 
-	$response = $kernel->handle( \Illuminate\Http\Request::capture() );
+		$response = $kernel->handle( \Illuminate\Http\Request::capture() );
 
-	$response->send();
+		$response->send();
 
-} catch ( \Exception $ex ) {
-	if ( ! \WPB\Support\Facades\Route::current() ) {
-		return true;
+	} catch ( \Exception $ex ) {
+		if ( ! \WPB\Support\Facades\Route::current() ) {
+			return true;
+		}
+		throw new \Exception( $ex, 1 );
 	}
-	throw new \Exception( $ex, 1 );
 }
