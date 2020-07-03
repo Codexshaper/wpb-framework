@@ -13,7 +13,7 @@ namespace WPB\Http;
 
 use WPB\Http\Events\RequestHandled;
 use Illuminate\Contracts\Container\Container;
-use WPB\Contracts\ExceptionHandler;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use WPB\Contracts\Http\Kernel as KernelContract;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Routing\Router;
@@ -111,8 +111,6 @@ class Kernel implements KernelContract {
 			$request->enableHttpMethodParameterOverride();
 			$response = $this->send_request_through_router( $request );
 		} catch ( Throwable $e ) {
-			$this->report_exception( $e );
-			$response = $this->render_exception( $request, $e );
 			throw new \Exception( $e, 1 );
 		}
 
