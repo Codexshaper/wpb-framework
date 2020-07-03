@@ -1,4 +1,13 @@
 <?php
+/**
+ * The bootstrap file.
+ *
+ * @link       https://github.com/maab16
+ * @since      1.0.0
+ *
+ * @package    WPB
+ * @subpackage WPB/src
+ */
 
 namespace WPB;
 
@@ -11,160 +20,263 @@ use Illuminate\Contracts\Container\Container as ContainerInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 
-class Application
-{
-    /**
-     * @var app
-     */
-    protected $app = null;
+/**
+ * The Application class.
+ *
+ * @since      1.0.0
+ * @package    WPB
+ * @subpackage WPB/src
+ * @author     Md Abu Ahsan basir <maab.career@gmail.com>
+ */
+class Application {
 
-    /**
-     * @var config
-     */
-    protected $config;
+	/**
+	 * The app container.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      \Illuminate\Contracts\Container\Container    $app    The app container.
+	 */
+	protected $app = null;
 
-    /**
-     * @var db
-     */
-    protected $db;
+	/**
+	 * The config.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      \WPB\Support\Facades\Config    $config    The config.
+	 */
+	protected $config;
 
-    /**
-     * @var options
-     */
-    protected $options;
+	/**
+	 * The database manager.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      \CodexShaper\Database\Database    $db    The database manager.
+	 */
+	protected $db;
 
-    /**
-     * @var root
-     */
-    protected $root;
+	/**
+	 * The default options.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      array    $options    The default options.
+	 */
+	protected $options;
 
-    public function __construct($options = [], ContainerInterface $container = null)
-    {
-        $this->options = $options;
-        
-        $this->app = $container;
+	/**
+	 * This string unique root path.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $root    This string unique root path.
+	 */
+	protected $root;
 
-        if (is_null($this->app)) {
-            $this->app = new Container();
-            Facade::setFacadeApplication($this->app);
-            $this->app->instance(ContainerInterface::class, $this->app);
-        }
+	/**
+	 * The application factory.
+	 *
+	 * @since    1.0.0
+	 * @param array                                                           $options The site options.
+	 * @param \Illuminate\Contracts\Container\Container as ContainerInterface $container The app container.
+	 *
+	 * @return void
+	 */
+	public function __construct( $options = array(), ContainerInterface $container = null ) {
+		$this->options = $options;
 
-        $this->app['app'] = $this->app;
+		$this->app = $container;
 
-        $this->root = __DIR__ . '/../../../../';
+		if ( is_null( $this->app ) ) {
+			$this->app = new Container();
+			Facade::setFacadeApplication( $this->app );
+			$this->app->instance( ContainerInterface::class, $this->app );
+		}
 
-        if (! empty($this->options) && isset($this->options['paths']['root'])) {
-            $this->root = rtrim($this->options['paths']['root'], "/") . '/';
-        }
+		$this->app['app'] = $this->app;
 
-        if (!isset($this->app['root'])) {
-            $this->app['root'] = $this->root;
-        }
+		$this->root = __DIR__ . '/../../../../';
 
-        $this->config = new Config($this->options);
+		if ( ! empty( $this->options ) && isset( $this->options['paths']['root'] ) ) {
+			$this->root = rtrim( $this->options['paths']['root'], '/' ) . '/';
+		}
 
-        $this->setupEnv();
-        $this->registerConfig();
-        $this->setupDatabase();
-        $this->registerProviders();
-        $this->registerRequest();
-        $this->registerRouter();
-        $this->loadRoutes($this->app['router']);
-    }
+		if ( ! isset( $this->app['root'] ) ) {
+			$this->app['root'] = $this->root;
+		}
 
-    public function getInstance()
-    {
-        if (!$this->app) {
-            return new self();
-        }
+		$this->config = new Config( $this->options );
 
-        return $this->app;
-    }
+		$this->setup_env();
+		$this->register_config();
+		$this->setup_database();
+		$this->register_providers();
+		$this->register_request();
+		$this->register_router();
+		$this->load_routes( $this->app['router'] );
+	}
 
-    protected function setupEnv()
-    {
-        $this->app['env'] = $this->config->get('app.env');
-    }
+	/**
+	 * Get the app container.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return \Illuminate\Container\Container
+	 */
+	public function get_instance() {
+		if ( ! $this->app ) {
+			new self();
+		}
 
-    protected function registerConfig()
-    {
-        $this->app->bind('config', function () {
-            return [
-                'app'           => $this->config->get('app'),
-                'view.paths'    => $this->config->get('view.paths'),
-                'view.compiled' => $this->config->get('view.compiled'),
-            ];
-        }, true);
-    }
+		return $this->app;
+	}
 
-    protected function setupDatabase()
-    {
-        global $wpdb;
+	/**
+	 * Setup the env.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function setup_env() {
+		$this->app['env'] = $this->config->get( 'app.env' );
+	}
 
-        $this->db = new Database([
-            'driver'            => 'mysql',
-            'host'               => $wpdb->dbhost,
-            'database'        => $wpdb->dbname,
-            'username'        => $wpdb->dbuser,
-            'password'        => $wpdb->dbpassword,
-            'prefix'          => $wpdb->prefix,
-            'charset'            => $wpdb->charset,
-            'collation'     => $wpdb->collate,
-        ]);
+	/**
+	 * Register config.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function register_config() {
+		$this->app->bind(
+			'config',
+			function () {
+				return array(
+					'app'           => $this->config->get( 'app' ),
+					'view.paths'    => $this->config->get( 'view.paths' ),
+					'view.compiled' => $this->config->get( 'view.compiled' ),
+				);
+			},
+			true
+		);
+	}
 
-        $this->db->run();
+	/**
+	 * Setup the database.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function setup_database() {
+		global $wpdb;
 
-        $this->app->singleton('db', function () {
-            return $this->db;
-        });
-    }
+		$this->db = new Database(
+			array(
+				'driver'    => 'mysql',
+				'host'      => $wpdb->dbhost,
+				'database'  => $wpdb->dbname,
+				'username'  => $wpdb->dbuser,
+				'password'  => $wpdb->dbpassword,
+				'prefix'    => $wpdb->prefix,
+				'charset'   => $wpdb->charset,
+				'collation' => $wpdb->collate,
+			)
+		);
 
-    protected function registerProviders()
-    {
-        $providers = $this->config->get('app.providers');
+		$this->db->run();
 
-        if( $providers && count($providers) > 0) {
-            foreach ($providers as $provider) {
-                with(new $provider($this->app))->register();
-            }
-        }
-    }
+		$this->app->singleton(
+			'db',
+			function () {
+				return $this->db;
+			}
+		);
+	}
 
-    protected function registerRequest()
-    {
-        $this->app->bind(Request::class, function ($app) {
-            $request = Request::capture();
+	/**
+	 * Register providers.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function register_providers() {
+		$providers = $this->config->get( 'app.providers' );
 
-            if ($wp_user = wp_get_current_user()) {
-                $user = User::find($wp_user->ID);
-                $request->merge(['user' => $user]);
-                $request->setUserResolver(function () use ($user) {
-                    return $user;
-                });
-            }
+		if ( $providers && count( $providers ) > 0 ) {
+			foreach ( $providers as $provider ) {
+				with( new $provider( $this->app ) )->register();
+			}
+		}
+	}
 
-            return $request;
-        });
-    }
+	/**
+	 * Register request.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function register_request() {
+		$this->app->bind(
+			Request::class,
+			function ( $app ) {
+				$request = Request::capture();
+				$wp_user = wp_get_current_user();
+				if ( $wp_user ) {
+					$user = User::find( $wp_user->ID );
+					$request->merge( array( 'user' => $user ) );
+					$request->setUserResolver(
+						function () use ( $user ) {
+							return $user;
+						}
+					);
+				}
 
-    protected function registerRouter()
-    {
-        $this->app->instance(\Illuminate\Routing\Router::class, $this->app['router']);
-         $this->app->instance(\WPB\Router::class, $this->app['router']);  
-        $this->app->alias('Route', \WPB\Support\Facades\Route::class);
-    }
+				return $request;
+			}
+		);
+	}
 
-    public function loadRoutes($router, $dir = null)
-    {
-        if (!$dir) {
-            $dir =  __DIR__ . '/../routes/';
-        }
+	/**
+	 * Register router.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	protected function register_router() {
+		$this->app->instance( \Illuminate\Routing\Router::class, $this->app['router'] );
+		$this->app->instance( \WPB\Router::class, $this->app['router'] );
+		$this->app->alias( 'Route', \WPB\Support\Facades\Route::class );
+	}
 
-        require $dir.'web.php';
+	/**
+	 * Get the config value.
+	 *
+	 * @since    1.0.0
+	 * @param \Illuminate\Routing\Router $router The app router.
+	 * @param string                     $dir The custom routes directory.
+	 *
+	 * @return void
+	 */
+	public function load_routes( $router, $dir = null ) {
+		if ( ! $dir ) {
+			$dir = __DIR__ . '/../routes/';
+		}
 
-        $router->group(['prefix' => 'api'], function () use ($dir, $router) {
-            require $dir.'api.php';
-        });
-    }
+		require $dir . 'web.php';
+
+		$router->group(
+			array( 'prefix' => 'api' ),
+			function () use ( $dir, $router ) {
+				require $dir . 'api.php';
+			}
+		);
+	}
 }

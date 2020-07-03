@@ -23,7 +23,7 @@ $app = ( new Application(
 	)
 ) );
 
-$container = $app->getInstance();
+$container = $app->get_instance();
 
 $container->singleton(
 	Illuminate\Contracts\Http\Kernel::class,
