@@ -13,7 +13,7 @@ namespace WPB\Http;
 
 use WPB\Http\Events\RequestHandled;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use WPB\Contracts\ExceptionHandler;
 use WPB\Contracts\Http\Kernel as KernelContract;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Routing\Router;
