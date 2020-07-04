@@ -50,7 +50,7 @@ class WPB_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-
+		$this->register_menus();
 	}
 
 	/**
@@ -97,6 +97,30 @@ class WPB_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wpb-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Register all menus here.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_menus() {
+		// Registerv root menu.
+		$menu             = new WPB_Admin_Menu( $this->plugin_name );
+		$menu->page_title = 'WPB';
+		$menu->menu_title = 'WPB';
+		$menu->capability = 'manage_options';
+		$menu->slug       = 'wpb';
+		$menu->icon       = 'dashicons-text';
+		$menu->save();
+		// Register submenu for root menu.
+		$submenu              = new WPB_Admin_SubMenu( $this->plugin_name );
+		$submenu->parent_slug = $menu->slug;
+		$submenu->page_title  = 'Settings';
+		$submenu->menu_title  = 'Settings';
+		$submenu->capability  = 'manage_options';
+		$submenu->slug        = 'admin.php?page=' . $menu->slug . '#/settings';
+		$submenu->save();
 	}
 
 }

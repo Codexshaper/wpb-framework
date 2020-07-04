@@ -98,6 +98,7 @@ class ComposerScripts {
 			'/public/css/wpb-public.css',
 			'/public/js/wpb-public.js',
 			'/resources/js/admin/main.js',
+			'/resources/js/admin/router/index.js',
 			'/resources/js/frontend/main.js',
 			'/resources/js/spa/main.js',
 			'/routes/web.php',

@@ -64,7 +64,7 @@ class WPB_Admin_Menu {
 	 * @access   public
 	 * @var      callback    $callback    The callback used to render content.
 	 */
-	public $callback;
+	public $callback = null;
 
 	/**
 	 * The menu icon.
@@ -136,12 +136,13 @@ class WPB_Admin_Menu {
 	 * @return void
 	 */
 	public function create_menu() {
-		$hook = add_menu_page(
+		$callback = $this->callback ?? array( $this, 'render_content' );
+		$hook     = add_menu_page(
 			$this->page_title,
 			$this->menu_title,
 			$this->capability,
 			$this->slug,
-			$this->callback,
+			$callback,
 			$this->icon
 		);
 
@@ -166,5 +167,14 @@ class WPB_Admin_Menu {
 		wp_enqueue_style( $this->plugin_name . '-vendors' );
 		wp_enqueue_style( $this->plugin_name . '-admin' );
 		wp_enqueue_script( $this->plugin_name . '-admin' );
+	}
+
+	/**
+	 * Render app content.
+	 *
+	 * @return void
+	 */
+	public function render_content() {
+		echo '<div class="wrap"><div id="wpb-admin" base-url="' . esc_attr( get_site_url() ) . '" csrf-token="' . esc_attr( wpb_csrf_token() ) . '"></div></div>';
 	}
 }

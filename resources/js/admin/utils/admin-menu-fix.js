@@ -25,6 +25,7 @@ function menuFix(slug) {
 
     $('ul.wp-submenu a', menuRoot).each(function(index, el) {
         if ( $(el).attr( 'href' ) === currentPath ) {
+            $('ul.wp-submenu a', menuRoot).parent().removeClass('current');
             $(el).parent().addClass('current');
             return;
         }
