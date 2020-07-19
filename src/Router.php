@@ -3,4 +3,5 @@
 namespace WPB;
 
 class Router
-{}
+{
+}
