@@ -8,7 +8,7 @@
  * @package    WPB
  */
 
-use Codexshaper_Pwa\Application;
+use WPB\Application;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
