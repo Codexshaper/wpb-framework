@@ -23,7 +23,9 @@ $app = ( new Application(
 	)
 ) );
 
-$container = $app->get_instance();
+global $wpb_app;
+
+$wpb_app = $container = $app->get_instance();
 
 $container->singleton(
 	Illuminate\Contracts\Http\Kernel::class,

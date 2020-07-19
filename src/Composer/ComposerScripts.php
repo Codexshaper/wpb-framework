@@ -110,7 +110,7 @@ class ComposerScripts {
 			'/src/Database/Eloquent/Scopes/PostTypeScope.php',
 			'/src/Database/DB.php',
 			'/src/Exceptions/Handler.php',
-			'/src/Http/Events/RequestHandler.php',
+			'/src/Http/Events/RequestHandled.php',
 			'/src/Http/Kernel.php',
 			'/src/helpers.php',
 			'/src/Support/Facades/Config.php',

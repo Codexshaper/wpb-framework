@@ -114,7 +114,7 @@ class Application {
 		$this->setup_database();
 		$this->register_providers();
 		$this->register_request();
-		$this->register_router();
+		$this->register_instances();
 		$this->load_routes( $this->app['router'] );
 	}
 
@@ -224,7 +224,7 @@ class Application {
 	 */
 	protected function register_request() {
 		$this->app->bind(
-			Request::class,
+			'request',
 			function ( $app ) {
 				$request = Request::capture();
 				$wp_user = wp_get_current_user();
@@ -250,9 +250,12 @@ class Application {
 	 *
 	 * @return void
 	 */
-	protected function register_router() {
+	protected function register_instances() {
+		$this->app->instance( \Illuminate\Http\Request::class, $this->app['request'] );
 		$this->app->instance( \Illuminate\Routing\Router::class, $this->app['router'] );
 		$this->app->instance( \WPB\Router::class, $this->app['router'] );
+		$this->app->instance( \Illuminate\Contracts\View\Factory::class, $this->app['view'] );
+		$this->app->instance( \Illuminate\Contracts\Routing\UrlGenerator::class, $this->app['url'] );
 		$this->app->alias( 'Route', \WPB\Support\Facades\Route::class );
 	}
 
