@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The plugin bootstrap file
+ * The plugin bootstrap file.
  *
  * This file is read by WordPress to generate the plugin information in the plugin
  * admin area. This file also includes all of the dependencies used by the plugin,
@@ -10,7 +10,6 @@
  *
  * @link              https://github.com/maab16
  * @since             1.0.0
- * @package           WPB
  *
  * @wordpress-plugin
  * Plugin Name:       WPB
@@ -26,33 +25,33 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 // Application root directory.
 if (!defined('WPB_APP_ROOT')) {
-	define( 'WPB_APP_ROOT', __DIR__ );
+    define('WPB_APP_ROOT', __DIR__);
 }
 // Worpress plugin builder file path.
 if (!defined('WPB_FILE')) {
-	define( 'WPB_FILE', __FILE__ );
+    define('WPB_FILE', __FILE__);
 }
 // Worpress plugin builder directory path.
 if (!defined('WPB_PATH')) {
-	define( 'WPB_PATH', dirname( WPB_FILE ) );
+    define('WPB_PATH', dirname(WPB_FILE));
 }
 // Worpress plugin builder includes path.
 if (!defined('WPB_INCLUDES')) {
-	define( 'WPB_INCLUDES', WPB_PATH . '/includes' );
+    define('WPB_INCLUDES', WPB_PATH.'/includes');
 }
 // Worpress plugin builder url.
 if (!defined('WPB_URL')) {
-	define( 'WPB_URL', plugins_url( '', WPB_FILE ) );
+    define('WPB_URL', plugins_url('', WPB_FILE));
 }
 // Worpress plugin builder assets path.
 if (!defined('WPB_ASSETS')) {
-	define( 'WPB_ASSETS', WPB_URL . '/public' );
+    define('WPB_ASSETS', WPB_URL.'/public');
 }
 
 require_once __DIR__.'/bootstrap/app.php';
@@ -62,34 +61,36 @@ require_once __DIR__.'/bootstrap/app.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WPB_VERSION', '1.0.0' );
+define('WPB_VERSION', '1.0.0');
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-wpb-activator.php
+ * This action is documented in includes/class-wpb-activator.php.
  */
-function wpb_activate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-activator.php';
-	WPB_Activator::activate();
+function wpb_activate()
+{
+    require_once plugin_dir_path(__FILE__).'includes/class-wpb-activator.php';
+    WPB_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wpb-deactivator.php
+ * This action is documented in includes/class-wpb-deactivator.php.
  */
-function wpb_deactivate() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpb-deactivator.php';
-	WPB_Deactivator::deactivate();
+function wpb_deactivate()
+{
+    require_once plugin_dir_path(__FILE__).'includes/class-wpb-deactivator.php';
+    WPB_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'wpb_activate' );
-register_deactivation_hook( __FILE__, 'wpb_deactivate' );
+register_activation_hook(__FILE__, 'wpb_activate');
+register_deactivation_hook(__FILE__, 'wpb_deactivate');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wpb.php';
+require plugin_dir_path(__FILE__).'includes/class-wpb.php';
 
 /**
  * Begins execution of the plugin.
@@ -100,10 +101,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wpb.php';
  *
  * @since    1.0.0
  */
-function wpb_run() {
-
-	$plugin = new WPB();
-	$plugin->run();
-
+function wpb_run()
+{
+    $plugin = new WPB();
+    $plugin->run();
 }
 wpb_run();

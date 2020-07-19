@@ -4,9 +4,6 @@
  *
  * @link       https://github.com/maab16
  * @since      1.0.0
- *
- * @package    WPB
- * @subpackage WPB/src/Database
  */
 
 namespace WPB\Database;
@@ -17,67 +14,66 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  * The Database class.
  *
  * @since      1.0.0
- * @package    WPB
- * @subpackage WPB/src/Database
+ *
  * @author     Md Abu Ahsan basir <maab.career@gmail.com>
  */
-class DB extends Capsule {
+class DB extends Capsule
+{
+    /**
+     * The database instance.
+     *
+     * @since    1.0.0
+     *
+     * @var \WPB\Database\DB The database instance.
+     */
+    protected static $instance = false;
 
-	/**
-	 * The database instance.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      \WPB\Database\DB    $instance    The database instance.
-	 */
-	protected static $instance = false;
+    /**
+     * Return database instance.
+     *
+     * @since    1.0.0
+     *
+     * @return null|\WPB\Database\DB
+     */
+    public static function instance()
+    {
+        if (!static::$instance) {
+            static::$instance = new self();
+        }
 
-	/**
-	 * Return database instance.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 *
-	 * @return null|\WPB\Database\DB
-	 */
-	public static function instance() {
-		if ( ! static::$instance ) {
-			static::$instance = new self();
-		}
+        return static::$instance;
+    }
 
-		return static::$instance;
-	}
+    /**
+     * The database constructor.
+     *
+     * @since    1.0.0
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-	/**
-	 * The database constructor.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		parent::__construct();
+        global $wpdb;
 
-		global $wpdb;
+        $this->addConnection(
+            [
 
-		$this->addConnection(
-			array(
+                'driver'    => 'mysql',
+                'host'      => $wpdb->dbhost,
+                'database'  => $wpdb->dbname,
+                'username'  => $wpdb->dbuser,
+                'password'  => $wpdb->dbpassword,
+                'prefix'    => $wpdb->prefix,
+                'charset'   => $wpdb->charset,
+                'collation' => $wpdb->collate,
+            ]
+        );
 
-				'driver'    => 'mysql',
-				'host'      => $wpdb->dbhost,
-				'database'  => $wpdb->dbname,
-				'username'  => $wpdb->dbuser,
-				'password'  => $wpdb->dbpassword,
-				'prefix'    => $wpdb->prefix,
-				'charset'   => $wpdb->charset,
-				'collation' => $wpdb->collate,
-			)
-		);
-
-		// Make this Capsule instance available globally.
-		$this->setAsGlobal();
-		// Setup the Eloquent ORM.
-		$this->bootEloquent();
-	}
+        // Make this Capsule instance available globally.
+        $this->setAsGlobal();
+        // Setup the Eloquent ORM.
+        $this->bootEloquent();
+    }
 }

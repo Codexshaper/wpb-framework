@@ -4,14 +4,11 @@
  *
  * @link       https://github.com/maab16
  * @since      1.0.0
- *
- * @package    WPB
- * @subpackage WPB/config
  */
 
-return array(
-	'paths'    => array(
-		__DIR__ . '/../resources/views',
-	),
-	'compiled' => __DIR__ . '/../storage/cache',
-);
+return [
+    'paths'    => [
+        __DIR__.'/../resources/views',
+    ],
+    'compiled' => __DIR__.'/../storage/cache',
+];

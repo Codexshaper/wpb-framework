@@ -7,18 +7,15 @@
  *
  * @link       https://github.com/maab16
  * @since      1.0.0
- *
- * @package    WPB
- * @subpackage WPB/routes
  */
 
-use WPB\Support\Facades\Route;
 use Illuminate\Http\Request;
+use WPB\Support\Facades\Route;
 
 $router->get(
-	'test',
-	function( Request $request ) {
-		echo 'API Test';
-		die();
-	}
+    'test',
+    function (Request $request) {
+        echo 'API Test';
+        die();
+    }
 );
