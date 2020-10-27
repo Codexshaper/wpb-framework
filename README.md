@@ -13,7 +13,7 @@ Wordpress plugin builder framework
 
 1. Download and create new project
 ```
-composer create-project codexshaper/wpb-framework project-name
+composer create-project codexshaper/wpb-framework plugin-name
 ```
 2. Autoload
 ```
