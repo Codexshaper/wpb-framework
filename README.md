@@ -17,7 +17,7 @@ composer create-project codexshaper/wpb-framework plugin-name
 ```
 2. Autoload
 ```
-composer dump-autolaod
+composer dump-autoload
 ```
 3. Install npm
 ```
